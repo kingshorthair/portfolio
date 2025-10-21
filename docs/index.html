@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Chris Skinner • Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* Minimal, accessible styles */
+    :root { --bg:#0b1020; --fg:#e8ecf1; --muted:#a9b2c1; --card:#0f1630; --border:#1e2a4a; --chip:#15224a; --link:#7cc7ff; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--fg); }
+    header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: end; justify-content: space-between; flex-wrap: wrap; }
+    h1 { margin: 0; font-size: 1.25rem; }
+    .controls { display: flex; gap: 8px; align-items: center; }
+    select { background: var(--card); color: var(--fg); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; }
+    main { max-width: 1100px; margin: 0 auto; padding: 18px 20px 40px; }
+    #count { color: var(--muted); margin: 6px 2px 14px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+    .card { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--card); display: flex; flex-direction: column; }
+    .img { aspect-ratio: 16/9; background: #0c122a; display: grid; place-items: center; }
+    .img img { width: 100%; height: 100%; object-fit: cover; }
+    .content { padding: 12px; }
+    .title { margin: 2px 0 6px; font-weight: 600; font-size: 1rem; }
+    .summary { margin: 0 0 10px; color: var(--muted); line-height: 1.35; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .chip { font-size: .78rem; padding: 3px 8px; border-radius: 999px; background: var(--chip); border: 1px solid var(--border); }
+    .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .links a { color: var(--link); text-decoration: none; border-bottom: 1px dashed transparent; }
+    .links a:hover { border-bottom-color: var(--link); }
+    @media (max-width: 560px) { header { align-items: start; } .controls { width: 100%; } .controls > * { flex: 1; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Chris Skinner — Portfolio</h1>
+      <div style="color:var(--muted);font-size:.95rem;margin-top:4px;">Geospatial & data platform work.</div>
+    </div>
+    <div class="controls">
+      <label for="role" style="font-size:.9rem;color:var(--muted);">Role:</label>
+      <select id="role">
+        <option value="">All</option>
+      </select>
+    </div>
+  </header>
+
+  <main>
+    <div id="count"></div>
+    <section id="grid" class="grid" aria-live="polite"></section>
+  </main>
+
+  <script>
+    const state = { data: [], role: "" };
+
+    // --- initialization ---
+    (async () => {
+      const res = await fetch("projects.json", { cache: "no-cache" });
+      state.data = await res.json();
+      buildRoleDropdown();
+      readHash();
+      document.getElementById("role").addEventListener("change", onRoleChange);
+      addEventListener("hashchange", () => { readHash(); render(); });
+      render();
+    })();
+
+    // --- role dropdown from project "roles" (array of strings) ---
+    function buildRoleDropdown() {
+      const set = new Set();
+      state.data.forEach(p => (p.roles || []).forEach(r => set.add(r)));
+      const roles = [...set].sort((a,b)=>a.localeCompare(b));
+      const sel = document.getElementById("role");
+      roles.forEach(r => sel.append(new Option(r, r)));
+    }
+
+    // --- URL hash -> role (supports #role=Encoded%20Value) ---
+    function readHash() {
+      const hash = (location.hash || "").slice(1);
+      if (!hash) { state.role = ""; return; }
+      const [k, v] = hash.split("=");
+      state.role = k === "role" ? decodeURIComponent(v || "") : "";
+      const sel = document.getElementById("role");
+      sel.value = [...sel.options].some(o => o.value === state.role) ? state.role : "";
+    }
+    function onRoleChange(e) {
+      state.role = e.target.value;
+      location.hash = state.role ? `role=${encodeURIComponent(state.role)}` : "";
+      render();
+    }
+
+    // --- rendering ---
+    function render() {
+      const items = state.data.filter(p => !state.role || (p.roles || []).includes(state.role));
+      document.getElementById("count").textContent = `${items.length} project${items.length === 1 ? "" : "s"}`;
+      const grid = document.getElementById("grid");
+      grid.innerHTML = "";
+      for (const p of items) grid.appendChild(card(p));
+    }
+
+    // --- card component ---
+    function card(p) {
+      const el = document.createElement("article");
+      el.className = "card";
+      const img = p.image ? `<img src="${p.image}" alt="">` : `<span style="color:#7784b2;font-size:.9rem;">No image</span>`;
+      const link = (label, url) => url ? `<a href="${url}" target="_blank" rel="noopener">${label} ↗</a>` : "";
+      // minimal, but shows roles + tech if present
+      el.innerHTML = `
+        <div class="img">${img}</div>
+        <div class="content">
+          <h3 class="title">${p.name || p.title || "Untitled"}</h3>
+          <p class="summary">${p.summary || ""}</p>
+          ${(p.roles?.length ? `<div class="chips">${p.roles.map(r=>`<span class="chip">${r}</span>`).join("")}</div>` : "")}
+          ${(p.tech?.length ? `<div class="chips" style="margin-top:4px;">${p.tech.map(t=>`<span class="chip">${t}</span>`).join("")}</div>` : "")}
+          <div class="links" style="margin-top:12px;">
+            ${link("Demo", p.links?.demo)}
+            ${link("Code", p.links?.code)}
+            ${link("Write-up", p.links?.writeup)}
+            ${link("Publication", p.links?.publication)}
+            ${link("Catalog", p.links?.catalog)}
+            ${link("Archive", p.links?.archive)}
+          </div>
+        </div>
+      `;
+      return el;
+    }
+  </script>
+</body>
+</html>

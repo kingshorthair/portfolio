@@ -1,0 +1,122 @@
+[
+  {
+    "id": "aggregated-oil-gas-history",
+    "name": "Aggregated Oil & Gas Drilling and Production History",
+    "summary": "National-scale pipeline aggregating millions of wells with production and status history across all U.S. states; spatial and temporal rollups with public delivery.",
+    "roles": ["Lead Data Architect", "Release Author"],
+    "tags": {
+      "role": ["data_engineering", "gis_admin", "architecture", "leadership", "governance"],
+      "domain": ["energy_oil_gas"],
+      "tech": ["python", "sql", "arcgis", "postgis"],
+      "platform": ["arcgis_online"],
+      "method": ["etl", "aggregation"],
+      "impact": ["national_scale", "public_data", "doi"]
+    },
+    "links": {
+      "demo": "https://certmapper.cr.usgs.gov/data/apps/oil_gas_cells/",
+      "writeup": "https://doi.org/10.5066/P9UIR5HE",
+      "code": "https://github.com/kingshorthair/resume/blob/main/production_aggregation.py"
+    },
+    "image": "aggregated_OG_map.png",
+    "organization": "USGS",
+    "metrics": {"wells": "millions", "states": "all"}
+  },
+  {
+    "id": "arcgis-enterprise-admin",
+    "name": "ArcGIS Enterprise System Administration",
+    "summary": "Directed internal and public-facing ArcGIS Enterprise environments (dev/test/prod), federated with ArcGIS Online; governed user access and coordinated infrastructure for scalable operations.",
+    "roles": ["Team Lead"],
+    "tags": {
+      "role": ["gis_admin", "architecture", "leadership", "governance"],
+      "domain": ["energy_oil_gas", "environmental"],
+      "tech": ["arcgis_enterprise", "sso"],
+      "platform": ["arcgis_enterprise", "arcgis_online"],
+      "method": ["admin", "operations"],
+      "impact": ["shared_services"]
+    },
+    "links": {},
+    "image": "arcgis_base_deployment_purple.png",
+    "organization": "USGS"
+  },
+  {
+    "id": "data-catalogs-integration",
+    "name": "Data Catalogs & Integration Workflows",
+    "summary": "Built internal catalogs for well logs, seismic, and geochemistry; integrated vendor datasets (S&P Global via Snowflake) for ArcGIS, Kingdom, and Harmony; managed $2.7M/yr data contract.",
+    "roles": ["Lead Architect", "Coordinator"],
+    "tags": {
+      "role": ["data_engineering", "gis_admin", "governance", "leadership"],
+      "domain": ["energy_oil_gas", "ccus"],
+      "tech": ["python", "sql", "snowflake", "arcgis"],
+      "platform": ["snowflake", "arcgis_enterprise"],
+      "method": ["cataloging", "data_integration"],
+      "impact": ["vendor_integration"]
+    },
+    "links": {},
+    "image": "sp_dashboard.png",
+    "organization": "USGS"
+  },
+  {
+    "id": "map-based-visualizations",
+    "name": "Map-Based Visualizations & Dashboards",
+    "summary": "Collaborated with frontend teams to deliver dashboards, story maps, and viewers turning spatial data into actionable products for stakeholders.",
+    "roles": ["Data Engineer", "Stakeholder Liaison"],
+    "tags": {
+      "role": ["gis_admin", "data_engineering", "leadership"],
+      "domain": ["energy_oil_gas", "environmental"],
+      "tech": ["arcgis_dashboards", "storymaps", "web_mapping"],
+      "platform": ["arcgis_online"],
+      "method": ["dashboards", "ui_delivery"],
+      "impact": ["public_data"]
+    },
+    "links": {
+      "demo": "https://certmapper.cr.usgs.gov/data/apps/orphanedwell_waterquality/",
+      "catalog": "https://certmapper.cr.usgs.gov/data/apps/noga-summary/",
+      "archive": "https://certmapper.cr.usgs.gov/data/apps/npra/",
+      "publication": "https://certmapper.cr.usgs.gov/data/apps/world-energy/"
+    },
+    "image": "noga_dashboard.png",
+    "organization": "USGS"
+  },
+  {
+    "id": "energy-data-release-platform",
+    "name": "Energy Program Data Release Platform",
+    "summary": "Owned lifecycle for 500+ USGS data releases: templates, tools, and pipelines for metadata-driven releases with ArcGIS Online integration; led training and stakeholder engagement.",
+    "roles": ["System Owner"],
+    "tags": {
+      "role": ["governance", "leadership", "gis_admin", "architecture"],
+      "domain": ["energy_oil_gas", "environmental"],
+      "tech": ["python", "arcgis_online", "metadata_fgdc_iso"],
+      "platform": ["sciencebase", "arcgis_online"],
+      "method": ["metadata", "release_workflow"],
+      "impact": ["doi", "public_data"]
+    },
+    "links": {
+      "writeup": "https://doi.org/10.5066/P9N7O1OT",
+      "catalog": "https://www.sciencebase.gov/catalog/folder/59cab03de4b017cf314094df",
+      "archive": "https://www.sciencebase.gov/catalog/folder/601c5893d34e94a4b9fc2742"
+    },
+    "image": "williston_data_release.png",
+    "organization": "USGS"
+  },
+  {
+    "id": "hydrogen-raster-workflow",
+    "name": "National Geologic Hydrogen Raster Workflow",
+    "summary": "Raster automation supporting national Monte Carlo simulations for hydrogen prospectivity across 16 geologic layers; delivered as a public web application with supporting release.",
+    "roles": ["Automation & Architecture Contributor"],
+    "tags": {
+      "role": ["data_engineering", "architecture", "analytics_ml"],
+      "domain": ["energy_oil_gas"],
+      "tech": ["python", "gdal", "arcgis_pro"],
+      "platform": [],
+      "method": ["raster_processing", "simulation", "automation"],
+      "impact": ["national_scale", "public_data", "publication"]
+    },
+    "links": {
+      "demo": "https://certmapper.cr.usgs.gov/data/apps/hydrogen/",
+      "writeup": "https://doi.org/10.5066/P13WCG5U",
+      "publication": "https://doi.org/10.3133/pp1900"
+    },
+    "image": "hydrogen_map.png",
+    "organization": "USGS"
+  }
+]
