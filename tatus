@@ -1,0 +1,29 @@
+[33mcommit 887f3c0d70d0535ef4dd9f61ecde2bd113a4f5f2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Chris Skinner <kingshorthair@gmail.com>
+Date:   Thu Oct 23 07:51:55 2025 -0600
+
+    improved phone responsiveness
+
+[33mcommit c9ae23e7cca46df6916a96342fc9481b94b48052[m
+Author: Chris Skinner <kingshorthair@gmail.com>
+Date:   Wed Oct 22 16:10:06 2025 -0600
+
+    update to portfolio, removing personal links
+
+[33mcommit b2652263372903aacb786d0dccda5e3548c83244[m
+Author: Chris Skinner <kingshorthair@gmail.com>
+Date:   Tue Oct 21 15:41:24 2025 -0600
+
+    update portfolio and new images
+
+[33mcommit 86eb37eec306598a001fd4df3a373d52c0223f6c[m
+Author: Chris Skinner <kingshorthair@gmail.com>
+Date:   Tue Oct 21 10:58:33 2025 -0600
+
+    initial build
+
+[33mcommit 4850fde0f3a393cdf8d04f607318a59f4ab2bd47[m
+Author: Christopher C Skinner <kingshorthair@gmail.com>
+Date:   Tue Oct 21 10:31:00 2025 -0600
+
+    Initial commit
