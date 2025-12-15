@@ -2,51 +2,117 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Chris Skinner • Portfolio</title>
+  <title>Chris Skinner — Enterprise Data Architecture &amp; Governance Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/outline/cube-transparent.svg">
+
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
     :root { --bg:#0b1020; --fg:#e8ecf1; --muted:#a9b2c1; --card:#0f1630; --border:#1e2a4a; --chip:#15224a; --link:#7cc7ff; }
 
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--fg); }
+    body {
+      margin: 0;
+      font-family: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: radial-gradient(140% 140% at 15% 10%, rgba(87,134,255,0.25), transparent 45%),
+                  radial-gradient(120% 120% at 85% 0%, rgba(93,239,214,0.18), transparent 35%),
+                  var(--bg);
+      color: var(--fg);
+    }
 
-    /* Header: compact + sticky controls on mobile */
     header {
       position: sticky; top: 0; z-index: 10;
-      background: linear-gradient(180deg, rgba(11,16,32,0.98), rgba(11,16,32,0.92));
+      background: linear-gradient(180deg, rgba(11,16,32,0.92), rgba(11,16,32,0.85));
       backdrop-filter: saturate(120%) blur(6px);
       border-bottom: 1px solid var(--border);
       padding: 14px 16px;
-      display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end;
+      display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;
     }
-    h1 { margin: 0; font-size: 1.15rem; font-weight: 700; }
-    .subtitle { margin: 4px 0 0; color: var(--muted); font-size: .92rem; }
-    .social-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
-    .social-links a { color: var(--link); text-decoration: none; border-bottom: 1px dashed transparent; }
-    .social-links a:hover { border-bottom-color: var(--link); }
+    h1 { margin: 0; font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 700; letter-spacing: -0.02em; }
+    .eyebrow { text-transform: uppercase; letter-spacing: 0.1em; font-size: .75rem; color: var(--muted); margin: 0 0 6px; }
+
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand .dot { width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(135deg, #7cc7ff, #6be7c8); box-shadow: 0 0 20px rgba(124,199,255,0.45); }
+    .brand-name { margin: 0; color: var(--fg); font-weight: 600; letter-spacing: -0.01em; }
+    .brand p { margin: 0; color: var(--muted); font-size: .93rem; }
 
     .controls { display: flex; gap: 8px; align-items: center; justify-self: end; }
     .controls label { font-size: .9rem; color: var(--muted); }
     select {
-      background: var(--card); color: var(--fg);
-      border: 1px solid var(--border); border-radius: 10px; padding: 7px 10px;
-      font-size: .95rem;
+      background: #0c1428; color: var(--fg);
+      border: 1px solid rgba(124,199,255,0.45); border-radius: 12px; padding: 7px 10px;
+      font-size: .95rem; box-shadow: 0 10px 30px rgba(0,0,0,0.28) inset;
     }
+    select:focus { outline: 2px solid rgba(124,199,255,0.6); outline-offset: 2px; }
+    select option { background: #0a1022; color: #f3f7ff; }
 
-    main { max-width: 1100px; margin: 0 auto; padding: 14px 16px 36px; }
-    #count { color: var(--muted); margin: 6px 2px 12px; font-size: .95rem; }
+    main { max-width: 1200px; margin: 0 auto; padding: 14px 16px 42px; }
+
+    .hero {
+      margin: 18px 0 16px;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(17,28,60,0.9), rgba(13,19,40,0.9));
+      box-shadow: 0 25px 60px rgba(5,10,30,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(220px at 90% 20%, rgba(124,199,255,0.18), transparent 50%),
+                  radial-gradient(300px at 15% 30%, rgba(107,231,200,0.12), transparent 55%);
+      pointer-events: none;
+      opacity: 0.9;
+    }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 2fr 1.2fr; gap: 26px; align-items: start; }
+    .hero-lead { margin: 6px 0 14px; font-size: 1.1rem; color: #d3deeb; max-width: 720px; }
+    .hero-copy { margin: 0 0 18px; color: var(--muted); line-height: 1.6; font-size: .98rem; max-width: 720px; }
+    .hero-copy p { margin: 0 0 10px; }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 18px; }
+    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 999px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.07); font-size: .9rem; color: #dce7f5; }
+    .pill .dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, #7cc7ff, #6be7c8); }
+
+    .social-links { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
+    .social-links a { color: var(--fg); text-decoration: none; border-bottom: 1px dashed transparent; font-weight: 600; }
+    .social-links a:hover { border-bottom-color: var(--link); color: var(--link); }
+
+    .hero-side {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+    .mini-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .mini-card h3 { margin: 0 0 6px; font-size: .95rem; letter-spacing: 0.01em; }
+    .mini-card ul { margin: 0; padding-left: 18px; color: var(--muted); line-height: 1.5; font-size: .95rem; }
+
+    #count { color: var(--muted); margin: 10px 2px 14px; font-size: .98rem; letter-spacing: 0.02em; text-transform: uppercase; }
 
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
     .card {
-      border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
-      background: var(--card); display: flex; flex-direction: column;
+      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+      background: linear-gradient(180deg, rgba(17,24,48,0.92), rgba(12,18,36,0.95));
+      display: flex; flex-direction: column;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.32);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
     }
+    .card:hover { transform: translateY(-4px); border-color: rgba(124,199,255,0.35); box-shadow: 0 24px 50px rgba(0,0,0,0.4); }
     .img { aspect-ratio: 16/9; background: #0c122a; display: grid; place-items: center; }
     .img img { width: 100%; height: 100%; object-fit: cover; }
 
     .content { padding: 12px; }
-    .title { margin: 2px 0 6px; font-weight: 650; font-size: 1rem; }
-    .summary { margin: 0 0 10px; color: var(--muted); line-height: 1.35; }
+    .title { margin: 2px 0 6px; font-weight: 650; font-size: 1.02rem; letter-spacing: -0.01em; }
+    .summary { margin: 0 0 10px; color: var(--muted); line-height: 1.4; }
     /* Clamp summaries by default; expandable */
     .clamp {
       display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
@@ -64,32 +130,30 @@
     .links a { color: var(--link); text-decoration: none; border-bottom: 1px dashed transparent; }
     .links a:hover { border-bottom-color: var(--link); }
 
-    /* Mobile tune-ups */
     @media (max-width: 560px) {
       header { grid-template-columns: 1fr; gap: 6px; padding: 10px 12px; }
-      h1 { font-size: 1.05rem; }
-      .subtitle { font-size: .88rem; }
       .controls { justify-self: start; }
       main { padding: 10px 12px 28px; }
-      #count { margin: 4px 2px 10px; font-size: .9rem; }
+      .hero { padding: 18px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 18px; }
+      .hero-copy { font-size: .95rem; }
+      .hero-side { grid-template-columns: 1fr; }
+      #count { margin: 8px 2px 10px; font-size: .9rem; }
       .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
       .content { padding: 10px; }
       .title { font-size: .96rem; }
       .chip { font-size: .74rem; padding: 2px 7px; }
-      /* tighten link spacing */
       .links { gap: 8px; margin-top: 8px; }
     }
   </style>
 </head>
 <body>
   <header>
-    <div>
-      <h1>Chris Skinner — <span style="font-weight:400;color:var(--muted)">Professional Work Portfolio</span></h1>
-      <p class="subtitle">Data Engineering | Geospatial | Project and Team Leadership | Automation</p>
-      <div class="social-links">
-        <a href="https://www.linkedin.com/in/chriscskinner/" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a href="mailto:kingshorthair@gmail.com">Email ↗</a>
-        <a href="https://github.com/kingshorthair" target="_blank" rel="noopener">GitHub ↗</a>
+    <div class="brand">
+      <span class="dot"></span>
+      <div>
+        <p class="eyebrow">Portfolio</p>
+        <p class="brand-name">Chris Skinner</p>
       </div>
     </div>
     <div class="controls">
@@ -99,6 +163,49 @@
   </header>
 
   <main>
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Enterprise Data Architecture &amp; Governance</p>
+          <h1>Chris Skinner</h1>
+          <p class="hero-lead">Designing data platforms where lineage, quality, and trust are built in.</p>
+          <div class="hero-copy">
+            <p>Most of my work involves designing and operating long-lived data systems in complex, regulated environments.</p>
+            <p>These projects illustrate how I approach data architecture, metadata and lineage, quality controls, and reproducible pipelines. These are patterns that translate directly to enterprise data platforms.</p>
+            <p>The focus is not on tools, but on <b>building systems teams can trust over time</b>.</p>
+          </div>
+          <div class="hero-pills">
+            <span class="pill"><span class="dot"></span>Lineage-first architectures</span>
+            <span class="pill"><span class="dot"></span>Metadata and reproducibility baked in</span>
+            <span class="pill"><span class="dot"></span>Stakeholder-first delivery</span>
+          </div>
+          <div class="social-links">
+            <a href="https://www.linkedin.com/in/chriscskinner/" target="_blank" rel="noopener">LinkedIn &rarr;</a>
+            <a href="mailto:kingshorthair@gmail.com">Email &rarr;</a>
+            <a href="https://github.com/kingshorthair" target="_blank" rel="noopener">GitHub &rarr;</a>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="mini-card">
+            <h3>What I solve</h3>
+            <ul>
+              <li>Governed data products with traceable lineage</li>
+              <li>Metadata programs that sustain over time</li>
+              <li>Quality controls for regulated, multi-team platforms</li>
+            </ul>
+          </div>
+          <div class="mini-card">
+            <h3>How I work</h3>
+            <ul>
+              <li>Translate constraints between stakeholders and engineering</li>
+              <li>Favor repeatable pipelines over one-off heroics</li>
+              <li>Design for long-lived teams and maintainable delivery</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <div id="count"></div>
     <section id="grid" class="grid" aria-live="polite"></section>
   </main>
@@ -160,7 +267,7 @@
 
       const linksHTML = p.links
         ? Object.entries(p.links)
-            .map(([label, url]) => `<a href="${url}" target="_blank" rel="noopener">${label} ↗</a>`)
+            .map(([label, url]) => `<a href="${url}" target="_blank" rel="noopener">${label} &rarr;</a>`)
             .join(" ")
         : "";
 
@@ -180,7 +287,7 @@
       // Add "More/Less" toggle if content is clamped
       const sum = el.querySelector(`#${CSS.escape(id)}`);
       if (sum && sum.textContent.trim().length > 0) {
-        // Always show toggle on mobile; on desktop it’s unobtrusive.
+        // Always show toggle on mobile; on desktop it's unobtrusive.
         const btn = document.createElement("button");
         btn.className = "more";
         btn.type = "button";

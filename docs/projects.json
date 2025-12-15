@@ -41,8 +41,8 @@
   {
     "id": "data-catalogs-integration",
     "name": "Data Catalogs & Integration Workflows",
-    "summary": "Built internal catalogs for well logs, seismic, and geochemistry; integrated vendor datasets (S&P Global via Snowflake) for ArcGIS, Kingdom, and Harmony; managed $2.7M/yr data contract.",
-    "roles": ["Data Engineer", "Product Owner", "Geospatial", "Metadata", "Programming"],
+    "summary": "Built internal catalogs and data pipelines for well logs, seismic, and geochemistry; integrated vendor datasets (S&P Global via Snowflake) for ArcGIS, Kingdom, and Harmony; managed $2.7M/yr data contract.",
+    "roles": ["Governance", "Data Engineer", "Product Owner", "Geospatial", "Metadata", "Programming"],
     "tags": {
       "role": ["data_engineering", "gis_admin", "governance", "leadership"],
       "domain": ["energy_oil_gas", "ccus"],
@@ -79,9 +79,9 @@
   },
   {
     "id": "energy-data-release-platform",
-    "name": "Energy Program Data Release Platform",
-    "summary": "Owned lifecycle for 500+ USGS data releases: templates, tools, and pipelines for metadata-driven releases with ArcGIS Online integration; led training and stakeholder engagement.",
-    "roles": ["Product Owner", "Geospatial", "Metadata"],
+    "name": "Geospatial Data Governance",
+    "summary": "Owned data lifecycle for 500+ USGS data releases: templates, tools, and pipelines for metadata-driven releases with ArcGIS Online integration; led training and stakeholder engagement.",
+    "roles": ["Governance", "Geospatial", "Metadata"],
     "tags": {
       "role": ["governance", "leadership", "gis_admin", "architecture"],
       "domain": ["energy_oil_gas", "environmental"],
@@ -123,7 +123,7 @@
     "id": "metadata-governance",
     "name": "Metadata Governance",
     "summary": "Collaborated with scientists, data managers, and IT staff to develop repeatable pipelines—both manual and automated—for metadata creation, maintenance, and peer review. Implemented validation checks, documentation templates, and DOI assignment workflows that strengthened governance, FAIR compliance, and long-term data stewardship.",
-    "roles": ["Metadata", "Geospatial", "Programming", "Stakeholder Liaison"],
+    "roles": ["Metadata", "Geospatial", "Programming", "Governance", "Stakeholder Liaison"],
     "tags": {
       "role": ["governance", "data_engineering"],
       "domain": ["energy_oil_gas", "environmental"],
@@ -143,7 +143,7 @@
   "id": "ai-assisted-workflow-automation",
   "name": "AI-Assisted Workflow Automation & Professional Development",
   "summary": "Developed custom GPT workflows and automation prompts to enhance data engineering, automation, and apply towards professional growth. Applied generative AI to streamline code generation, document drafting, and knowledge synthesis for continuous learning and productivity improvement.",
-  "roles": ["Programming"],
+  "roles": ["Programming", "Governance"],
   "tags": {
     "role": ["data_engineering", "governance", "automation"],
     "domain": ["professional_development", "ai_tooling"],
