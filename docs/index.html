@@ -2,304 +2,556 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Chris Skinner — Enterprise Data Architecture &amp; Governance Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/svg+xml" href="https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/outline/cube-transparent.svg">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chris Skinner — Enterprise Data Architecture & Governance</title>
+  <meta name="description" content="Enterprise Data Architecture & Governance — Selected architecture case studies focused on lineage, quality, security, and long-lived data platforms." />
+ <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
-    :root { --bg:#0b1020; --fg:#e8ecf1; --muted:#a9b2c1; --card:#0f1630; --border:#1e2a4a; --chip:#15224a; --link:#7cc7ff; }
-
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
-      background: radial-gradient(140% 140% at 15% 10%, rgba(87,134,255,0.25), transparent 45%),
-                  radial-gradient(120% 120% at 85% 0%, rgba(93,239,214,0.18), transparent 35%),
-                  var(--bg);
-      color: var(--fg);
+    :root{
+      --bg0:#070A12;
+      --bg1:#0A1022;
+      --card:#0E1630cc;
+      --card2:#0C142acc;
+      --stroke:#233056;
+      --stroke2:#1a2442;
+      --text:#E9EEFF;
+      --muted:#B8C2E6;
+      --muted2:#93A2D6;
+      --accent:#6EE7FF;
+      --accent2:#7C5CFF;
+      --accent3:#44FFA3;
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --shadow2: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 22px;
+      --radius2: 16px;
+      --max: 1120px;
+      --pad: clamp(16px, 4vw, 32px);
     }
 
-    header {
-      position: sticky; top: 0; z-index: 10;
-      background: linear-gradient(180deg, rgba(11,16,32,0.92), rgba(11,16,32,0.85));
-      backdrop-filter: saturate(120%) blur(6px);
-      border-bottom: 1px solid var(--border);
-      padding: 14px 16px;
-      display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 800px at 15% 15%, rgba(124,92,255,.25), transparent 55%),
+        radial-gradient(900px 700px at 80% 20%, rgba(110,231,255,.22), transparent 55%),
+        radial-gradient(1100px 900px at 60% 85%, rgba(68,255,163,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
     }
-    h1 { margin: 0; font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 700; letter-spacing: -0.02em; }
-    .eyebrow { text-transform: uppercase; letter-spacing: 0.1em; font-size: .75rem; color: var(--muted); margin: 0 0 6px; }
 
-    .brand { display: flex; align-items: center; gap: 10px; }
-    .brand .dot { width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(135deg, #7cc7ff, #6be7c8); box-shadow: 0 0 20px rgba(124,199,255,0.45); }
-    .brand-name { margin: 0; color: var(--fg); font-weight: 600; letter-spacing: -0.01em; }
-    .brand p { margin: 0; color: var(--muted); font-size: .93rem; }
-
-    .controls { display: flex; gap: 8px; align-items: center; justify-self: end; }
-    .controls label { font-size: .9rem; color: var(--muted); }
-    select {
-      background: #0c1428; color: var(--fg);
-      border: 1px solid rgba(124,199,255,0.45); border-radius: 12px; padding: 7px 10px;
-      font-size: .95rem; box-shadow: 0 10px 30px rgba(0,0,0,0.28) inset;
+    /* Subtle grid */
+    .grid{
+      position:fixed; inset:0; pointer-events:none; opacity:.22;
+      background-image:
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: radial-gradient(closest-side at 50% 20%, rgba(0,0,0,.9), transparent 70%);
     }
-    select:focus { outline: 2px solid rgba(124,199,255,0.6); outline-offset: 2px; }
-    select option { background: #0a1022; color: #f3f7ff; }
 
-    main { max-width: 1200px; margin: 0 auto; padding: 14px 16px 42px; }
+    a{color:inherit; text-decoration:none}
+    a:hover{color:var(--text)}
 
-    .hero {
-      margin: 18px 0 16px;
-      padding: 24px;
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(17,28,60,0.9), rgba(13,19,40,0.9));
-      box-shadow: 0 25px 60px rgba(5,10,30,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
-      position: relative;
-      overflow: hidden;
+    .wrap{max-width:var(--max); margin:0 auto; padding: var(--pad)}
+
+    /* Top nav */
+    .nav{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(7,10,18,.75), rgba(7,10,18,.25));
+      border-bottom: 1px solid rgba(35,48,86,.45);
     }
-    .hero::after {
-      content: ""; position: absolute; inset: 0;
-      background: radial-gradient(220px at 90% 20%, rgba(124,199,255,0.18), transparent 50%),
-                  radial-gradient(300px at 15% 30%, rgba(107,231,200,0.12), transparent 55%);
-      pointer-events: none;
-      opacity: 0.9;
+    .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:16px; padding: 12px var(--pad); max-width:var(--max); margin:0 auto;}
+    .brand{display:flex; align-items:center; gap:10px; min-width: 220px;}
+    .mark{
+      width:34px; height:34px; border-radius:12px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(110,231,255,.9), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(124,92,255,.85), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
     }
-    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 2fr 1.2fr; gap: 26px; align-items: start; }
-    .hero-lead { margin: 6px 0 14px; font-size: 1.1rem; color: #d3deeb; max-width: 720px; }
-    .hero-copy { margin: 0 0 18px; color: var(--muted); line-height: 1.6; font-size: .98rem; max-width: 720px; }
-    .hero-copy p { margin: 0 0 10px; }
-    .hero-pills { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 18px; }
-    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 999px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.07); font-size: .9rem; color: #dce7f5; }
-    .pill .dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, #7cc7ff, #6be7c8); }
+    .brand .t1{font-weight:650; letter-spacing:.2px}
+    .brand .t2{font-size:12px; color:var(--muted2); letter-spacing:.14em; text-transform:uppercase}
 
-    .social-links { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
-    .social-links a { color: var(--fg); text-decoration: none; border-bottom: 1px dashed transparent; font-weight: 600; }
-    .social-links a:hover { border-bottom-color: var(--link); color: var(--link); }
+    .navlinks{display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:flex-end}
+    .pill{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(35,48,86,.55);
+      background: rgba(14,22,48,.35);
+      color:var(--muted);
+      font-size:14px;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      white-space:nowrap;
+    }
+    .pill:hover{transform: translateY(-1px); border-color: rgba(110,231,255,.55); background: rgba(14,22,48,.55)}
 
-    .hero-side {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 16px;
+    .cta{
+      padding:10px 14px;
+      border-radius:999px;
+      background: linear-gradient(135deg, rgba(110,231,255,.18), rgba(124,92,255,.18));
+      border:1px solid rgba(255,255,255,.18);
+      color:var(--text);
+    }
+
+    /* Hero */
+    .hero{padding: 34px 0 18px}
+    .hero-grid{display:grid; grid-template-columns: 1.25fr .85fr; gap: 22px; align-items:stretch}
+
+    .card{
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(14,22,48,.72), rgba(12,20,42,.52));
+      border:1px solid rgba(35,48,86,.7);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(600px 240px at 20% 10%, rgba(110,231,255,.10), transparent 65%),
+        radial-gradient(520px 240px at 80% 0%, rgba(124,92,255,.12), transparent 62%);
+      pointer-events:none;
+    }
+
+    .hero-left{padding: 26px 26px 22px}
+    .kicker{font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted2)}
+    h1{margin: 10px 0 10px; font-size: clamp(34px, 5vw, 52px); line-height:1.05; letter-spacing:-.02em}
+    .sub{font-size: clamp(18px, 2.2vw, 22px); color: var(--muted); line-height:1.35; margin:0 0 16px}
+    .p{color:var(--muted); line-height:1.6; margin:0 0 12px}
+
+    .chips{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
+    .chip{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(35,48,86,.7);
+      background: rgba(7,10,18,.25);
+      color: var(--text);
+      box-shadow: var(--shadow2);
+      font-size: 14px;
+    }
+    .dot{width:9px; height:9px; border-radius:99px; background: var(--accent); box-shadow: 0 0 0 4px rgba(110,231,255,.10)}
+
+    .hero-right{padding: 18px; display:grid; gap: 12px}
+    .mini{
+      border-radius: var(--radius2);
+      border:1px solid rgba(35,48,86,.7);
+      background: rgba(7,10,18,.18);
       padding: 16px;
-      display: grid;
+      position:relative;
+      overflow:hidden;
+    }
+    .mini h3{margin:0 0 10px; font-size:16px; letter-spacing:.2px}
+    .mini ul{margin:0; padding-left: 18px; color:var(--muted); line-height:1.55}
+    .mini li{margin:6px 0}
+
+    .mini::after{
+      content:"";
+      position:absolute; right:-20px; top:-20px;
+      width:140px; height:140px; border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, rgba(110,231,255,.16), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(124,92,255,.16), transparent 60%);
+      filter: blur(2px);
+      opacity:.75;
+    }
+
+    /* Section headers */
+    .section{padding: 18px 0}
+    .section-head{display:flex; align-items:flex-end; justify-content:space-between; gap: 14px; margin: 26px 0 10px}
+    .section-head h2{margin:0; font-size:18px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted2)}
+    .section-head .hint{color:var(--muted); font-size:14px}
+
+    /* Case study cards */
+    .cases{display:grid; grid-template-columns: 1fr; gap: 16px}
+
+    details.case{
+      border-radius: var(--radius);
+      border:1px solid rgba(35,48,86,.7);
+      background: linear-gradient(180deg, rgba(14,22,48,.55), rgba(12,20,42,.38));
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+
+    summary{
+      list-style:none;
+      cursor:pointer;
+      padding: 18px 18px;
+      display:grid;
+      grid-template-columns: 1fr auto;
       gap: 12px;
+      align-items:center;
+      position:relative;
     }
-    .mini-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
+    summary::-webkit-details-marker{display:none}
+
+    .case-title{display:flex; flex-direction:column; gap:6px}
+    .case-title .name{font-size:18px; font-weight:650; letter-spacing:.2px}
+    .case-title .pattern{color:var(--muted); font-size:14px; line-height:1.35}
+
+    .chev{
+      width:34px; height:34px; border-radius:12px;
+      border:1px solid rgba(35,48,86,.8);
+      background: rgba(7,10,18,.25);
+      display:grid; place-items:center;
+      transition: transform .18s ease;
+    }
+    details[open] .chev{transform: rotate(180deg)}
+
+    .case-body{padding: 0 18px 18px; color:var(--muted)}
+    .case-body p{margin: 12px 0; line-height:1.65}
+
+    .grid2{display:grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px}
+    .box{
+      border-radius: var(--radius2);
+      border:1px solid rgba(35,48,86,.7);
+      background: rgba(7,10,18,.18);
+      padding: 14px;
+    }
+    .box h4{margin:0 0 8px; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted2)}
+    .box ul{margin:0; padding-left: 18px; line-height:1.6}
+
+    .links{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .link{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(35,48,86,.65);
+      background: rgba(7,10,18,.25);
+      color: var(--text);
+      font-size: 14px;
+    }
+    .link:hover{border-color: rgba(110,231,255,.6)}
+    .case-visual{margin-top:12px;}
+    .case-img{
+      width:100%;
       border-radius: 12px;
-      padding: 12px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+      border:1px solid rgba(110,231,255,.25);
+      box-shadow: var(--shadow2);
+      background: #0a1022;
+      display:block;
     }
-    .mini-card h3 { margin: 0 0 6px; font-size: .95rem; letter-spacing: 0.01em; }
-    .mini-card ul { margin: 0; padding-left: 18px; color: var(--muted); line-height: 1.5; font-size: .95rem; }
-
-    #count { color: var(--muted); margin: 10px 2px 14px; font-size: .98rem; letter-spacing: 0.02em; text-transform: uppercase; }
-
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
-    .card {
-      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
-      background: linear-gradient(180deg, rgba(17,24,48,0.92), rgba(12,18,36,0.95));
-      display: flex; flex-direction: column;
-      box-shadow: 0 20px 45px rgba(0,0,0,0.32);
-      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    .case-caption{
+      margin: 6px 0 0;
+      color: var(--muted2);
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
     }
-    .card:hover { transform: translateY(-4px); border-color: rgba(124,199,255,0.35); box-shadow: 0 24px 50px rgba(0,0,0,0.4); }
-    .img { aspect-ratio: 16/9; background: #0c122a; display: grid; place-items: center; }
-    .img img { width: 100%; height: 100%; object-fit: cover; }
 
-    .content { padding: 12px; }
-    .title { margin: 2px 0 6px; font-weight: 650; font-size: 1.02rem; letter-spacing: -0.01em; }
-    .summary { margin: 0 0 10px; color: var(--muted); line-height: 1.4; }
-    /* Clamp summaries by default; expandable */
-    .clamp {
-      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    /* Tier 2 */
+    .tier2{display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px}
+    .t2card{
+      border-radius: var(--radius);
+      border:1px solid rgba(35,48,86,.7);
+      background: linear-gradient(180deg, rgba(14,22,48,.45), rgba(12,20,42,.30));
+      box-shadow: var(--shadow2);
+      padding: 16px;
+      position:relative;
+      overflow:hidden;
     }
-    .more {
-      background: transparent; color: var(--link); border: none; padding: 0;
-      font: inherit; cursor: pointer; border-bottom: 1px dashed transparent;
+    .t2card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(420px 180px at 0% 0%, rgba(110,231,255,.08), transparent 60%);
+      pointer-events:none;
     }
-    .more:hover { border-bottom-color: var(--link); }
+    .t2card h3{margin:0 0 8px; font-size:16px}
+    .t2card p{margin:0; color:var(--muted); line-height:1.6}
+    .t2card .links{margin-top:10px}
 
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
-    .chip { font-size: .78rem; padding: 3px 8px; border-radius: 999px; background: var(--chip); border: 1px solid var(--border); }
-
-    .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-    .links a { color: var(--link); text-decoration: none; border-bottom: 1px dashed transparent; }
-    .links a:hover { border-bottom-color: var(--link); }
-
-    @media (max-width: 560px) {
-      header { grid-template-columns: 1fr; gap: 6px; padding: 10px 12px; }
-      .controls { justify-self: start; }
-      main { padding: 10px 12px 28px; }
-      .hero { padding: 18px; }
-      .hero-grid { grid-template-columns: 1fr; gap: 18px; }
-      .hero-copy { font-size: .95rem; }
-      .hero-side { grid-template-columns: 1fr; }
-      #count { margin: 8px 2px 10px; font-size: .9rem; }
-      .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-      .content { padding: 10px; }
-      .title { font-size: .96rem; }
-      .chip { font-size: .74rem; padding: 2px 7px; }
-      .links { gap: 8px; margin-top: 8px; }
+    /* Footer */
+    footer{margin-top: 26px; padding: 18px 0 46px; color: var(--muted)}
+    .foot{
+      border-top: 1px solid rgba(35,48,86,.6);
+      padding-top: 18px;
+      display:flex; gap: 14px; align-items:center; justify-content:space-between; flex-wrap:wrap;
     }
+
+    /* Responsive */
+    @media (max-width: 920px){
+      .hero-grid{grid-template-columns: 1fr;}
+      .brand{min-width:auto}
+      .grid2{grid-template-columns: 1fr}
+      .tier2{grid-template-columns: 1fr}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto !important; transition:none !important; animation:none !important}
+    }
+
+    /* Smooth scrolling */
+    html{scroll-behavior:smooth}
+
+    /* Focus styles */
+    :focus-visible{outline: 2px solid rgba(110,231,255,.65); outline-offset: 3px; border-radius: 10px}
   </style>
 </head>
+
 <body>
-  <header>
-    <div class="brand">
-      <span class="dot"></span>
-      <div>
-        <p class="eyebrow">Portfolio</p>
-        <p class="brand-name">Chris Skinner</p>
+  <div class="grid" aria-hidden="true"></div>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div>
+          <div class="t2">Enterprise Data Architecture &amp; Governance</div>
+          <div class="t1">Chris Skinner</div>
+        </div>
       </div>
-    </div>
-    <div class="controls">
-      <label for="role">Role:</label>
-      <select id="role"><option value="">All</option></select>
+
+      <nav class="navlinks" aria-label="Primary">
+        <a class="pill" href="#case-studies">Case studies</a>
+        <a class="pill" href="#additional">Additional work</a>
+        <a class="pill" href="#connect">Connect</a>
+        <a class="pill cta" href="mailto:kingshorthair@gmail.com">Email</a>
+      </nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero">
+  <main class="wrap">
+    <section class="hero" id="top">
       <div class="hero-grid">
-        <div>
-          <p class="eyebrow">Enterprise Data Architecture &amp; Governance</p>
-          <h1>Chris Skinner</h1>
-          <p class="hero-lead">Designing data platforms where lineage, quality, and trust are built in.</p>
-          <div class="hero-copy">
-            <p>Most of my work involves designing and operating long-lived data systems in complex, regulated environments.</p>
-            <p>These projects illustrate how I approach data architecture, metadata and lineage, quality controls, and reproducible pipelines. These are patterns that translate directly to enterprise data platforms.</p>
-            <p>The focus is not on tools, but on <b>building systems teams can trust over time</b>.</p>
-          </div>
-          <div class="hero-pills">
-            <span class="pill"><span class="dot"></span>Lineage-first architectures</span>
-            <span class="pill"><span class="dot"></span>Metadata and reproducibility baked in</span>
-            <span class="pill"><span class="dot"></span>Stakeholder-first delivery</span>
-          </div>
-          <div class="social-links">
-            <a href="https://www.linkedin.com/in/chriscskinner/" target="_blank" rel="noopener">LinkedIn &rarr;</a>
-            <a href="mailto:kingshorthair@gmail.com">Email &rarr;</a>
-            <a href="https://github.com/kingshorthair" target="_blank" rel="noopener">GitHub &rarr;</a>
+        <div class="card">
+          <div class="hero-left">
+            <div class="kicker">Enterprise Data Architecture &amp; Governance</div>
+            <h1>Chris Skinner</h1>
+            <p class="sub">Designing data platforms where <strong>lineage</strong>, <strong>quality</strong>, and <strong>trust</strong> are built in.</p>
+
+            <p class="p">I design and operate long-lived data platforms in complex, regulated environments where data must remain trustworthy over time. My work focuses on integrating imperfect, multi-source data; embedding governance, lineage, and security into daily operations; and delivering systems that support real analytical and decision-making needs.</p>
+            <p class="p">Rather than optimizing for individual tools or short-term outputs, the case studies below highlight architectural patterns—how constraints become durable designs, how uncertainty is handled explicitly, and how data products are made reliable for sustained use across teams and domains.</p>
+
+            <div class="chips" aria-label="Key patterns">
+              <span class="chip"><span class="dot"></span>Lineage-first architectures</span>
+              <span class="chip"><span class="dot" style="background:var(--accent2)"></span>Metadata and reproducibility baked in</span>
+              <span class="chip"><span class="dot" style="background:var(--accent3)"></span>Stakeholder-first delivery</span>
+            </div>
           </div>
         </div>
-        <div class="hero-side">
-          <div class="mini-card">
-            <h3>What I solve</h3>
-            <ul>
-              <li>Governed data products with traceable lineage</li>
-              <li>Metadata programs that sustain over time</li>
-              <li>Quality controls for regulated, multi-team platforms</li>
-            </ul>
-          </div>
-          <div class="mini-card">
-            <h3>How I work</h3>
-            <ul>
-              <li>Translate constraints between stakeholders and engineering</li>
-              <li>Favor repeatable pipelines over one-off heroics</li>
-              <li>Design for long-lived teams and maintainable delivery</li>
-            </ul>
+
+        <div class="card">
+          <div class="hero-right">
+            <div class="mini">
+              <h3>What I solve</h3>
+              <ul>
+                <li>Governed data products with traceable lineage</li>
+                <li>Metadata programs that sustain over time</li>
+                <li>Quality controls for regulated, multi-team platforms</li>
+              </ul>
+            </div>
+
+            <div class="mini">
+              <h3>How I work</h3>
+              <ul>
+                <li>Translate constraints between stakeholders and engineering</li>
+                <li>Favor repeatable pipelines over one-off heroics</li>
+                <li>Design for long-lived teams and maintainable delivery</li>
+              </ul>
+            </div>
+            <div class="mini">
+         
+                  <img class="case-img" src="data_flow_general.png" alt="Conceptual integration delivering analysis-ready outputs.">
+              
+            </div>
+ 
           </div>
         </div>
       </div>
     </section>
 
-    <div id="count"></div>
-    <section id="grid" class="grid" aria-live="polite"></section>
+    <section class="section" id="case-studies">
+      <div class="section-head">
+        <h2>Selected Architecture Case Studies</h2>
+        <div class="hint">Expandable details · skim-friendly · architecture-forward</div>
+      </div>
+
+      <div class="cases">
+        <!-- Case 1 -->
+        <details class="case" open>
+          <summary>
+            <div class="case-title">
+              <div class="name">1) Multinational Oil &amp; Gas Data Integration &amp; Analysis Platform</div>
+              <div class="pattern"><strong>Architecture pattern:</strong> Multi-stream subsurface data integration with explicit handling of uncertainty and parallel interpretations.</div>
+            </div>
+            <div class="chev" aria-hidden="true">▾</div>
+          </summary>
+
+          <div class="case-body">
+            <p><strong>Summary:</strong> Supported a multinational subsurface data integration and analysis environment combining vendor-licensed datasets, proprietary inputs, and locally developed geological interpretations. The focus was pragmatic delivery of usable, defensible data for regional and global studies—despite imperfect alignment across domains.</p>
+
+            <div class="grid2">
+              <div class="box">
+                <h4>Key contributions</h4>
+                <ul>
+                  <li>Integrated licensed vendor, proprietary, and locally interpreted data under contractual and governance constraints</li>
+                  <li>Supported parallel data streams across wells, production, formations/tops, geochemistry, seismic, with spatial and temporally versioned interpretations</li>
+                  <li>Performed QA/QC and cross-checks to surface inconsistencies, uncertainty, and gaps</li>
+                  <li>Helped operationalize stratigraphic and formation data used in subsurface characterization</li>
+                  <li>Built Python/SQL workflows for ingestion, validation, reconciliation, and recurring analytics</li>
+                  <li>Implemented role-based access controls, auditing, and security enforcement aligned with least-privilege principles</li>
+                </ul>
+              </div>
+              <div class="box">
+                <h4>Why it matters</h4>
+                <p>Reflects real upstream data environments where value comes from disciplined integration, transparent uncertainty, and repeatable delivery—not from forcing a single authoritative view.</p>
+                <div class="case-visual">
+                  <img class="case-img" src="data_integration.jpg" alt="Conceptual integration layer for governing parallel subsurface data streams and delivering analysis-ready outputs.">
+                  <p class="case-caption">Conceptual integration layer for governing parallel subsurface data streams and delivering analysis-ready outputs.</p>
+                </div>
+            </div>
+          </div>
+        </details>
+
+        <!-- Case 2 -->
+        <details class="case">
+          <summary>
+            <div class="case-title">
+              <div class="name">2) Metadata-Driven Data Catalog &amp; Governance Platform</div>
+              <div class="pattern"><strong>Architecture pattern:</strong> Metadata-first governance with automated validation, lineage, and catalog readiness.</div>
+            </div>
+            <div class="chev" aria-hidden="true">▾</div>
+          </summary>
+
+          <div class="case-body">
+            <p><strong>Summary:</strong> Architected and operated a governed, metadata-first data release catalog for multi-terabyte scientific datasets, embedding quality checks, lineage documentation, and reproducible publication workflows.</p>
+
+            <div class="grid2">
+              <div class="box">
+                <h4>Key contributions</h4>
+                <ul>
+                  <li>Defined and enforced metadata standards (FGDC/ISO) and controlled vocabularies</li>
+                  <li>Built automated validation and review workflows for data and metadata quality</li>
+                  <li>Implemented lineage and documentation practices supporting stewardship and discoverability</li>
+                  <li>Operated the platform through repeated release cycles while balancing rigor and delivery</li>
+                  <li>Enforced access controls, audit logging, and least-privilege permissions across data, metadata, and release workflows</li>
+                </ul>
+              </div>
+              <div class="box">
+                <h4>Why it matters</h4>
+                <p>Demonstrates how governance can function as operational infrastructure, aligning directly with catalog-led enterprise models (e.g., Purview-style data maps and stewardship workflows).</p>
+                <div class="case-visual">
+                <img class="case-img" src="metadata_lifecycle.png" alt="Metadata and governance span the data lifecycle, enabling secure, auditable, and reproducible data products from acquisition through publication.">
+                <p class="case-caption">Metadata and governance span the data lifecycle, enabling secure, auditable, and reproducible data products from acquisition through publication.</p>
+                </div> 
+            </div>
+          </div>
+        </details>
+
+        <!-- Case 3 -->
+        <details class="case">
+          <summary>
+            <div class="case-title">
+              <div class="name">3) Hydrogen Prospectivity Data Architecture</div>
+              <div class="pattern"><strong>Architecture pattern:</strong> Analysis-ready data architecture enabling reproducible feature engineering and explainable analytics.</div>
+            </div>
+            <div class="chev" aria-hidden="true">▾</div>
+          </summary>
+
+          <div class="case-body">
+            <p><strong>Summary:</strong> Designed the data architecture supporting hydrogen prospectivity analysis by integrating heterogeneous geologic and geochemical datasets into harmonized, analysis-ready structures.</p>
+
+            <div class="grid2">
+              <div class="box">
+                <h4>Key contributions</h4>
+                <ul>
+                  <li>Designed schemas and integration patterns for diverse scientific and proprietary inputs</li>
+                  <li>Built reproducible data preparation pipelines supporting feature engineering</li>
+                  <li>Documented transformations, assumptions, and lineage to support transparency and reuse</li>
+                  <li>Delivered governed, analysis-ready datasets rather than one-off model outputs</li>
+                </ul>
+
+                <div class="links">
+                  <a class="link" href="https://certmapper.cr.usgs.gov/data/apps/hydrogen/" target="_blank" rel="noopener">Selected public-facing example ↗</a>
+                </div>
+              </div>
+              <div class="box">
+                <h4>Why it matters</h4>
+                <p>Shows how disciplined data architecture underpins Open Data initiatives for credible analytics, repeatability, and reusability.</p>
+                <img class="case-img" src="hydrogen_data.png" alt="Hydrogen prospectivity analysis integrating geologic, geochemical, and spatial datasets into a governed, analysis-ready framework.">
+                <p class="case-caption">Hydrogen prospectivity analysis integrating geologic, geochemical, and spatial datasets into a governed, analysis-ready framework.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section" id="additional">
+      <div class="section-head">
+        <h2>Additional Architecture &amp; Governance Work</h2>
+       
+      </div>
+
+      <div class="tier2">
+        <div class="t2card">
+          <h3>Enterprise Geochemistry Data Platform</h3>
+          <p>Helped establish and modernize an enterprise geochemistry database by integrating legacy data systems, aligning data structures with QMS-audited laboratory workflows, performing extensive QA/QC, and preparing validated, well-documented public data extracts suitable for external review and reuse.</p>
+        </div>
+
+        <div class="t2card">
+          <h3>Orphaned Wells &amp; Environmental Risk Data Platform</h3>
+          <p>Integrated well integrity, groundwater, and environmental datasets into a governed risk-ranking platform supporting environmental analysis, regulatory review, and decision-making.</p>
+          <div class="links">
+            <a class="link" href="https://certmapper.cr.usgs.gov/data/apps/orphanedwell_waterquality/" target="_blank" rel="noopener">Selected public-facing example ↗</a>
+          </div>
+        </div>
+
+        <div class="t2card">
+          <h3>Enterprise Data &amp; GIS Platform Modernization</h3>
+          <p>Led modernization of legacy enterprise data and GIS platforms, including administration of enterprise GIS environments, support for public-facing applications, maintenance of internal data catalogs, and synchronization between enterprise systems through automation, schema standardization, governance controls, and improved operational reliability.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer id="connect">
+      <div class="section-head">
+        <h2>Connect</h2>
+        <div class="hint">Resumes are tailored per role; available upon request.</div>
+      </div>
+
+      <div class="foot">
+        <div class="links" aria-label="Contact links">
+          <a class="link" href="https://www.linkedin.com/in/chriscskinner/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a class="link" href="https://github.com/kingshorthair" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="link" href="mailto:kingshorthair@gmail.com">Email</a>
+        </div>
+        <div style="color:var(--muted); font-size:14px">© <span id="y"></span> Chris Skinner</div>
+      </div>
+    </footer>
   </main>
 
   <script>
-    const state = { data: [], role: "" };
+    // Small progressive enhancement: set year, optionally auto-close other details on mobile
+    document.getElementById('y').textContent = new Date().getFullYear();
 
-    (async () => {
-      try {
-        const res = await fetch("projects.json", { cache: "no-cache" });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        state.data = await res.json();
-        buildRoleDropdown();
-        readHash();
-        document.getElementById("role").addEventListener("change", onRoleChange);
-        addEventListener("hashchange", () => { readHash(); render(); });
-        render();
-      } catch (err) {
-        console.error("Error loading projects:", err);
-        document.getElementById("grid").innerHTML = `<p style="color:#f77;">Could not load projects.json</p>`;
-      }
-    })();
+    // Optional: accordion behavior on small screens to reduce scroll.
+    const mq = window.matchMedia('(max-width: 920px)');
+    const cases = Array.from(document.querySelectorAll('details.case'));
 
-    function buildRoleDropdown() {
-      const set = new Set();
-      state.data.forEach(p => (p.roles || []).forEach(r => set.add(r)));
-      const roles = [...set].sort();
-      const sel = document.getElementById("role");
-      roles.forEach(r => sel.append(new Option(r, r)));
-    }
-
-    function readHash() {
-      const hash = (location.hash || "").slice(1);
-      if (!hash) { state.role = ""; return; }
-      const [k, v] = hash.split("=");
-      state.role = k === "role" ? decodeURIComponent(v || "") : "";
-      const sel = document.getElementById("role");
-      sel.value = [...sel.options].some(o => o.value === state.role) ? state.role : "";
-    }
-
-    function onRoleChange(e) {
-      state.role = e.target.value;
-      location.hash = state.role ? `role=${encodeURIComponent(state.role)}` : "";
-      render();
-    }
-
-    function render() {
-      const items = state.data.filter(p => !state.role || (p.roles || []).includes(state.role));
-      document.getElementById("count").textContent = `${items.length} project${items.length === 1 ? "" : "s"}`;
-      const grid = document.getElementById("grid");
-      grid.innerHTML = "";
-      for (const p of items) grid.appendChild(makeCard(p));
-    }
-
-    function makeCard(p) {
-      const el = document.createElement("article");
-      el.className = "card";
-      const img = p.image ? `<img src="${p.image}" alt="" loading="lazy">` : `<span style="color:#7784b2;font-size:.9rem;">No image</span>`;
-
-      const linksHTML = p.links
-        ? Object.entries(p.links)
-            .map(([label, url]) => `<a href="${url}" target="_blank" rel="noopener">${label} &rarr;</a>`)
-            .join(" ")
-        : "";
-
-      const id = `sum-${p.id || Math.random().toString(36).slice(2)}`;
-
-      el.innerHTML = `
-        <div class="img">${img}</div>
-        <div class="content">
-          <h3 class="title">${p.name || p.title || "Untitled"}</h3>
-          <p id="${id}" class="summary clamp">${p.summary || ""}</p>
-          ${(p.roles?.length ? `<div class="chips">${p.roles.map(r=>`<span class="chip">${r}</span>`).join("")}</div>` : "")}
-          ${(p.tech?.length ? `<div class="chips" style="margin-top:4px;">${p.tech.map(t=>`<span class="chip">${t}</span>`).join("")}</div>` : "")}
-          <div class="links">${linksHTML}</div>
-        </div>
-      `;
-
-      // Add "More/Less" toggle if content is clamped
-      const sum = el.querySelector(`#${CSS.escape(id)}`);
-      if (sum && sum.textContent.trim().length > 0) {
-        // Always show toggle on mobile; on desktop it's unobtrusive.
-        const btn = document.createElement("button");
-        btn.className = "more";
-        btn.type = "button";
-        btn.textContent = "More";
-        btn.addEventListener("click", () => {
-          sum.classList.toggle("clamp");
-          btn.textContent = sum.classList.contains("clamp") ? "More" : "Less";
+    function setAccordionBehavior(){
+      if (!cases.length) return;
+      if (mq.matches){
+        cases.forEach(d => {
+          d.addEventListener('toggle', () => {
+            if (d.open){
+              cases.forEach(o => { if (o !== d) o.open = false; });
+            }
+          }, { passive:true });
         });
-        sum.insertAdjacentElement("afterend", btn);
       }
-      return el;
     }
+
+    setAccordionBehavior();
   </script>
 </body>
 </html>
